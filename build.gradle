@@ -88,3 +88,11 @@ dependencyManagement {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+tasks.register('copyApiDocs', Copy) {
+    from("docs/apis")
+
+    into(layout.buildDirectory.dir("resources/main/static/docs/apis").get().asFile)
+}
+
+processResources.dependsOn copyApiDocs
