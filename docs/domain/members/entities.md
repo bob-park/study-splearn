@@ -11,7 +11,8 @@
 
 ```mermaid
 classDiagram
-%% 회원 상태
+    
+    note for MemberStatus "회원 상태"
     class MemberStatus {
         <<enumeration>>
         PENDING
@@ -19,15 +20,13 @@ classDiagram
         DEACTIVATED
     }
 
-%% 회원
+    note for Member "회원"
     class Member {
         -email: String;
         -passwordHash: String;
         -nickname: String;
         -status: MemberStatus
-        
     }
-    
 
     Member --> MemberStatus: uses
 ```

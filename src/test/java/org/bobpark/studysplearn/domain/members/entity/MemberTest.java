@@ -1,5 +1,6 @@
 package org.bobpark.studysplearn.domain.members.entity;
 
+
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
@@ -19,4 +20,8 @@ class MemberTest {
         assertThat(member.getStatus()).isEqualTo(MemberStatus.PENDING);
     }
 
+    @Test
+    void name(){
+
+    }
 }
