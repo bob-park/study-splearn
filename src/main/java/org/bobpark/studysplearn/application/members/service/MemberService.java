@@ -39,6 +39,7 @@ public class MemberService implements MemberRegister {
                 .nickname(registerRequest.nickname())
                 .password(registerRequest.password())
                 .passwordEncoder(passwordEncoder)
+                .address(registerRequest.address())
                 .build();
 
         createdMember = memberRepository.save(createdMember);

@@ -8,5 +8,6 @@ import lombok.Builder;
 @Builder
 public record MemberRegisterRequest(@Email String email,
                                     @Size(min = 5, max = 10) String nickname,
-                                    @Size(min = 5, max = 10) String password) {
+                                    @Size(min = 5, max = 10) String password,
+                                    String address) {
 }

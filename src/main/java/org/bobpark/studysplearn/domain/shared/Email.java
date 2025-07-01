@@ -1,4 +1,4 @@
-package org.bobpark.studysplearn.domain.members;
+package org.bobpark.studysplearn.domain.shared;
 
 import jakarta.persistence.Embeddable;
 

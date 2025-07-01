@@ -1,4 +1,7 @@
+# 회원 애그리거트 (Member Aggregate)
+
 ## 회원(Member)
+_Aggregate Root_
 ### 행위
 - static builder(): 회원 등록: email, nickname, password, status ;; 나는 builder 쓸꺼임
 - activate(): 가입을 완료 시킨다.
@@ -22,10 +25,28 @@ _Domain Service_
 - `matches()`: 비밀번호 일치 확인
 
 
+## 회원 상세(MemberDetail)
+
 ```mermaid
 classDiagram
-    
-    note for MemberStatus "회원 상태"
+    class Member {
+        -Long id 
+        -String email 
+        -String passwordHash 
+        -String nickname 
+        -MemberStatus status 
+        -MemberDetail memberDetail
+        +setMemberDetail(MemberDetail)
+    }
+
+    class MemberDetail {
+        -Long id 
+        -Member member 
+        -String address 
+        -LocalDateTime createdDate 
+        +setMember(Member)
+    }
+
     class MemberStatus {
         <<enumeration>>
         PENDING
@@ -33,13 +54,7 @@ classDiagram
         DEACTIVATED
     }
 
-    note for Member "회원"
-    class Member {
-        -email: String;
-        -passwordHash: String;
-        -nickname: String;
-        -status: MemberStatus
-    }
-
     Member --> MemberStatus: uses
+    Member "1" <--> "1" MemberDetail
+
 ```

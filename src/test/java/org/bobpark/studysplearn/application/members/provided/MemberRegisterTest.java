@@ -31,9 +31,12 @@ class MemberRegisterTest {
                     .email("bobpark@bobpark.org")
                     .nickname("bobpark")
                     .password("12345")
+                    .address("address")
                     .build());
 
         assertThat(member).isNotNull();
+        assertThat(member.getMemberDetail().getCreatedDate()).isNotNull();
+
     }
 
     @Test

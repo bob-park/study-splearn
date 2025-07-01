@@ -13,8 +13,27 @@
 > 외부(Actor) -> 어댑터 -> 애플리케이션 -> 도메인
 
 
-## 패키지
-- configure: application 설정 관련 (bean 주입 등)
+## 패키지 구조
+```text
+adapter/
+    webapi/
+      {version}/
+    integration/
+    security/
+application/
+  {names}/
+    required/
+    provided/
+    service/
+      {version}/
+        {names}/
+configure/
+domain/
+  {names}/
+Application.java
+
+```
+- configure: 
 - domain
   - {names}
 - application
@@ -22,11 +41,12 @@
     - required: 내부와 상호작용하는 ports
     - provided: 외부와 상호작용하는 ports
     - service: provided interface 를 구현한 application service
+      - {version}
+        - {names}
 - adapter
   - webapi
-    - {versions}
+    - {version}
       - {names}
-  - persistence
   - integration: 외부 시스템 연동
   - security: security 관련 (설정 제외)
 
