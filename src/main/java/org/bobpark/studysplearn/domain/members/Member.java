@@ -19,6 +19,8 @@ import lombok.ToString;
 import org.springframework.lang.NonNull;
 
 import org.apache.commons.lang3.ObjectUtils;
+import org.hibernate.annotations.NaturalId;
+import org.hibernate.annotations.NaturalIdCache;
 
 import com.malgn.common.entity.annotation.SnowflakeIdGenerateValue;
 
@@ -27,13 +29,20 @@ import com.malgn.common.entity.annotation.SnowflakeIdGenerateValue;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "members")
+@NaturalIdCache // @Id 가 아닌 경우 persistence context 에 캐싱하지 않지만, 요거 쓰면, 캐싱됨
 public class Member {
 
     @Id
     @SnowflakeIdGenerateValue
     private Long id;
 
+    /*
+     * business 적으로 필요한 ID 인경우 hibernate 에서 제공하는 NatureId 를 사용하면 유효성 체크를 해줌
+     *
+     * 실제 컬럼에 unique 제약 조건이 붙음
+     */
     @Embedded
+    @NaturalId
     private Email email;
 
     private String nickname;

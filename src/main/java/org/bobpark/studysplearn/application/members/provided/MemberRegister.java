@@ -1,4 +1,4 @@
-package org.bobpark.studysplearn.application.provided.members;
+package org.bobpark.studysplearn.application.members.provided;
 
 import org.bobpark.studysplearn.domain.members.Member;
 import org.bobpark.studysplearn.domain.members.MemberRegisterRequest;

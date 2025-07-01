@@ -1,4 +1,4 @@
-package org.bobpark.studysplearn.application.required.members;
+package org.bobpark.studysplearn.application.members.required;
 
 import org.bobpark.studysplearn.domain.members.Email;
 
