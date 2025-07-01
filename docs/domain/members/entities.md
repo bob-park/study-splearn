@@ -2,7 +2,7 @@
 ### 행위
 - static create(): 회원 생성: email, nickname, password, status
 - activate(): 가입을 완료 시킨다.
-- deactivate(): 탈퇴 시ㅣ킨다.
+- deactivate(): 탈퇴 시킨다.
 - verifyPassword(): 비밀번호를 검증한다.
 
 ### 규칙
