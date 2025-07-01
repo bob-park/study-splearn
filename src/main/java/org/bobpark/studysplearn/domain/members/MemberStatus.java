@@ -1,4 +1,4 @@
-package org.bobpark.studysplearn.domain.members.entity;
+package org.bobpark.studysplearn.domain.members;
 
 public enum MemberStatus {
     PENDING,

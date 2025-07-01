@@ -1,6 +1,7 @@
-package org.bobpark.studysplearn.domain.members.entity;
+package org.bobpark.studysplearn.domain.members;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.bobpark.studysplearn.domain.members.MemberFixture.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,18 +12,7 @@ class MemberTest {
 
     @BeforeEach
     void setUp() {
-        this.passwordEncoder =
-            new PasswordEncoder() {
-                @Override
-                public String encode(String password) {
-                    return password.toUpperCase();
-                }
-
-                @Override
-                public boolean matches(String password, String passwordHash) {
-                    return encode(password).equals(passwordHash);
-                }
-            };
+        this.passwordEncoder = createPasswordEncoder();
     }
 
     @Test

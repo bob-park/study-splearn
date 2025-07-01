@@ -15,13 +15,13 @@
 
 ## 패키지
 - domain
-  - application
-    - required
-    - provided
-  - adapter
-    - webapi
-    - persistence
-    - integration
-    - security
+- application
+  - required: 내부와 상호작용하는 ports
+  - provided: 외부와 상호작용하는 ports
+- adapter
+  - webapi
+  - persistence
+  - integration
+  - security
 
 

@@ -1,4 +1,4 @@
-package org.bobpark.studysplearn.domain.members.entity;
+package org.bobpark.studysplearn.domain.members;
 
 import org.springframework.lang.NonNull;
 

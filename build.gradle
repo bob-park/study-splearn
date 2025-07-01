@@ -64,6 +64,9 @@ dependencies {
     // jdbc
     implementation 'org.postgresql:postgresql:42.7.3'
 
+    // https://mvnrepository.com/artifact/com.h2database/h2
+    testImplementation 'com.h2database:h2:2.3.232'
+
     // p6spy
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.2'
 

@@ -1,0 +1,29 @@
+## server
+server:
+  port: 8080
+
+## eureka
+eureka:
+  client:
+    enabled: off
+
+## malgn
+malgn:
+  auth:
+    user:
+      enabled: off
+  redis:
+    enabled: off
+  notification:
+    enabled: off
+  cqrs:
+    enabled: off
+
+
+## logging
+logging:
+  file:
+    name:
+  level:
+    web: debug
+    org.bobpark: debug

@@ -1,10 +1,14 @@
-package org.bobpark.studysplearn.domain.members.entity;
+package org.bobpark.studysplearn.domain.members;
 
 import static com.google.common.base.Preconditions.*;
 import static org.apache.commons.lang3.StringUtils.*;
 
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -15,15 +19,25 @@ import lombok.ToString;
 import org.springframework.lang.NonNull;
 
 import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
+
+import com.malgn.common.entity.annotation.SnowflakeIdGenerateValue;
 
 @ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
+@Table(name = "members")
 public class Member {
 
-    private String email;
+    @Id
+    @SnowflakeIdGenerateValue
+    private Long id;
+
+    @Embedded
+    private Email email;
+
     private String nickname;
+
     private String passwordHash;
 
     @Enumerated(EnumType.STRING)
@@ -43,8 +57,7 @@ public class Member {
         checkArgument(isNotBlank(password), "password must be provided.");
         checkArgument(ObjectUtils.isNotEmpty(passwordEncoder), "passwordEncoder must be provided.");
 
-
-        this.email = email;
+        this.email = new Email(email);
         this.nickname = nickname;
         this.passwordHash = passwordEncoder.encode(password);
         this.status = MemberStatus.PENDING;

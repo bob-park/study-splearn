@@ -1,12 +1,12 @@
 ## 회원(Member)
 ### 행위
-- static create(): 회원 생성: email, nickname, password, status
+- static builder(): 회원 등록: email, nickname, password, status ;; 나는 builder 쓸꺼임
 - activate(): 가입을 완료 시킨다.
 - deactivate(): 탈퇴 시킨다.
 - verifyPassword(): 비밀번호를 검증한다.
 
 ### 규칙
-회원 생성 후 상태는 가입 대기
+- 회원 생성 후 상태는 가입 대기
 - 일정조건을 만족하면 가입 완료가 된다.
 - 가입 완료 상태에서는 탈퇴할 수 있다.
 
