@@ -1,71 +1,77 @@
 package org.bobpark.studysplearn.adapter.webapi.member;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
+
+import java.io.UnsupportedEncodingException;
 
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
+import org.springframework.test.web.servlet.assertj.MvcTestResult;
+import org.springframework.test.web.servlet.assertj.MvcTestResultAssert;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.bobpark.studysplearn.application.members.provided.MemberRegister;
+import org.bobpark.studysplearn.adapter.webapi.member.dto.MemberRegisterResponse;
+import org.bobpark.studysplearn.application.members.required.MemberRepository;
 import org.bobpark.studysplearn.domain.members.Member;
 import org.bobpark.studysplearn.domain.members.MemberFixture;
 import org.bobpark.studysplearn.domain.members.MemberRegisterRequest;
 import org.bobpark.studysplearn.domain.members.PasswordEncoder;
 
+/**
+ * api test
+ */
+@SpringBootTest
+@AutoConfigureMockMvc
+@Transactional
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-@WebMvcTest(MemberApi.class)
 class MemberApiTest {
 
     final MockMvcTester mvcTester;
     final ObjectMapper om;
-
-    @MockitoBean
-    MemberRegister memberRegister;
+    final MemberRepository memberRepository;
 
     PasswordEncoder passwordEncoder = MemberFixture.createPasswordEncoder();
 
     @Test
-    void register() throws JsonProcessingException {
-
-        Member member =
-            Member.builder()
-                .id(1L)
-                .email("bob@bob.org")
-                .password("123456")
-                .passwordEncoder(passwordEncoder)
-                .nickname("bob")
-                .address("test")
-                .build();
-
-        when(memberRegister.register(any())).thenReturn(member);
-
+    void register() throws JsonProcessingException, UnsupportedEncodingException {
         MemberRegisterRequest request =
             MemberRegisterRequest.builder()
                 .email("bob@bob.org")
                 .password("123456")
-                .nickname("bob")
+                .nickname("bobpark")
                 .address("test")
                 .build();
 
         String requestJson = om.writeValueAsString(request);
 
-        assertThat(mvcTester.post().uri("/members")
-            .contentType(MediaType.APPLICATION_JSON).content(requestJson))
+        MvcTestResult result =
+            mvcTester.post().uri("/members")
+                .contentType(MediaType.APPLICATION_JSON).content(requestJson).exchange();
+
+        assertThat(result)
             .hasStatusOk()
             .bodyJson()
-            .extractingPath("$.memberId").asNumber().isEqualTo(1);
+            .hasPathSatisfying("$.memberId", value -> assertThat(value).isNotNull());
 
-        verify(memberRegister).register(request);
+        // 실제 DB 에 들어간 값비교
+        MemberRegisterResponse response =
+            om.readValue(result.getResponse().getContentAsString(),
+                MemberRegisterResponse.class);
+
+        Member member = memberRepository.findById(response.memberId()).orElseThrow();
+
+        assertThat(member.getId()).isNotNull();
 
     }
+
 }

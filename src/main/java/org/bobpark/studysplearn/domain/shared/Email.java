@@ -16,9 +16,9 @@ import lombok.ToString;
 @Embeddable
 public class Email {
 
-    private String address;
+    private String email;
 
-    public Email(String address) {
-        this.address = address;
+    public Email(String email) {
+        this.email = email;
     }
 }

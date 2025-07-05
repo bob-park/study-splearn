@@ -12,9 +12,11 @@ import org.springframework.validation.annotation.Validated;
 import org.bobpark.studysplearn.application.members.provided.MemberRegister;
 import org.bobpark.studysplearn.application.members.required.EmailSender;
 import org.bobpark.studysplearn.application.members.required.MemberRepository;
+import org.bobpark.studysplearn.domain.members.DuplicationEmailException;
 import org.bobpark.studysplearn.domain.members.Member;
 import org.bobpark.studysplearn.domain.members.MemberRegisterRequest;
 import org.bobpark.studysplearn.domain.members.PasswordEncoder;
+import org.bobpark.studysplearn.domain.shared.Email;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -32,6 +34,7 @@ public class MemberService implements MemberRegister {
     public Member register(@Valid MemberRegisterRequest registerRequest) {
 
         // check
+        checkDuplicationEmail(registerRequest.email());
 
         Member createdMember =
             Member.builder()
@@ -46,9 +49,14 @@ public class MemberService implements MemberRegister {
 
         log.debug("registered member. ({})", createdMember);
 
-
         emailSender.send(createdMember.getEmail(), "등록을 완료해주세요", "아래 링크를 클릭해서 등록을 완료해주세요.");
 
         return createdMember;
+    }
+
+    private void checkDuplicationEmail(String email) {
+        if (memberRepository.findByEmail(new Email(email)).isPresent()) {
+            throw new DuplicationEmailException();
+        }
     }
 }

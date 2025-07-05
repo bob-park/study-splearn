@@ -1,8 +1,11 @@
 package org.bobpark.studysplearn.application.members.required;
 
+import java.util.Optional;
+
 import org.springframework.data.repository.Repository;
 
 import org.bobpark.studysplearn.domain.members.Member;
+import org.bobpark.studysplearn.domain.shared.Email;
 
 /**
  * JpaRepository 를 사용하는게 아니라 maker interface 인 Repository 를 사용
@@ -16,4 +19,7 @@ public interface MemberRepository extends Repository<Member, Long> {
 
     Member save(Member member);
 
+    Optional<Member> findByEmail(Email email);
+
+    Optional<Member> findById(Long id);
 }
