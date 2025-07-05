@@ -68,7 +68,7 @@ public class Member {
      * @param passwordEncoder passwordEncoder 는 entity 에 저장되지 않아야함
      */
     @Builder
-    private Member(@NonNull String email, @NonNull String nickname, @NonNull String password, @NonNull String address,
+    private Member(Long id, @NonNull String email, @NonNull String nickname, @NonNull String password, @NonNull String address,
         @NonNull PasswordEncoder passwordEncoder) {
 
         checkArgument(isNotBlank(email), "email must be provided.");
@@ -76,6 +76,7 @@ public class Member {
         checkArgument(isNotBlank(address), "address must be provided.");
         checkArgument(ObjectUtils.isNotEmpty(passwordEncoder), "passwordEncoder must be provided.");
 
+        this.id = id;
         this.email = new Email(email);
         this.nickname = nickname;
         this.passwordHash = passwordEncoder.encode(password);

@@ -3,6 +3,7 @@ package org.bobpark.studysplearn.adapter.webapi.member;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,9 +20,11 @@ public class MemberApi {
     private final MemberRegister memberRegister;
 
     @PostMapping(path = "")
-    public MemberRegisterResponse register(MemberRegisterRequest request){
+    public MemberRegisterResponse register(@RequestBody MemberRegisterRequest request) {
         Member member = memberRegister.register(request);
 
-        return new MemberRegisterResponse();
+        return MemberRegisterResponse.builder()
+            .memberId(member.getId())
+            .build();
     }
 }
